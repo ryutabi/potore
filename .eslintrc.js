@@ -2,17 +2,19 @@ module.exports = {
   root: true,
   env: {
     browser: true,
-    node: true,
+    node: true
   },
   parserOptions: {
-    parser: 'babel-eslint',
+    parser: 'babel-eslint'
   },
   extends: [
     'eslint:recommended',
     'plugin:vue/recommended',
-    'plugin:prettier/recommended',
+    'plugin:prettier/recommended'
   ],
   plugins: ['vue'],
   // add your custom rules here
-  rules: {},
+  rules: {
+    'no-var': 2
+  }
 }

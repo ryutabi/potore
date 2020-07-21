@@ -1,3 +1,6 @@
+require('dotenv').config()
+const { APIKEY, AUTHDOMAIN, DATABASEURL, PROJECTID, STORAGEBUCKET, MESSAGINGSENDERID, APPID, MEASUREMENTID } = process.env
+
 export default {
   /*
    ** Nuxt rendering mode
@@ -21,10 +24,10 @@ export default {
       {
         hid: 'description',
         name: 'description',
-        content: process.env.npm_package_description || '',
-      },
+        content: process.env.npm_package_description || ''
+      }
     ],
-    link: [{ rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }],
+    link: [{ rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }]
   },
   /*
    ** Global CSS
@@ -34,7 +37,7 @@ export default {
    ** Plugins to load before mounting the App
    ** https://nuxtjs.org/guide/plugins
    */
-  plugins: [],
+  plugins: ['~/plugins/firebase'],
   /*
    ** Auto import components
    ** See https://nuxtjs.org/api/configuration-components
@@ -45,7 +48,7 @@ export default {
    */
   buildModules: [
     // Doc: https://github.com/nuxt-community/eslint-module
-    '@nuxtjs/eslint-module',
+    '@nuxtjs/eslint-module'
   ],
   /*
    ** Nuxt.js modules
@@ -55,5 +58,31 @@ export default {
    ** Build configuration
    ** See https://nuxtjs.org/api/configuration-build/
    */
-  build: {},
+  build: {
+    // core-js@3
+    babel: {
+      presets({ isServer }) {
+        return [
+          [
+            require.resolve('@nuxt/babel-preset-app'),
+            // require.resolve('@nuxt/babel-preset-app-edge'), // For nuxt-edge users
+            {
+              buildTarget: isServer ? 'server' : 'client',
+              corejs: { version: 3 }
+            }
+          ]
+        ]
+      }
+    }
+  },
+  env: {
+    APIKEY,
+    AUTHDOMAIN,
+    DATABASEURL,
+    PROJECTID,
+    STORAGEBUCKET,
+    MESSAGINGSENDERID,
+    APPID,
+    MEASUREMENTID
+  }
 }
